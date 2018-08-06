@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="Ian Mcxa" />
+<meta name="description" content="personal blog, tech, computer networking, computer security" />
+<meta name="keywords" content="blog, tech" />
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.46" />
+
+<link rel="canonical" href="https://ianmcxa.github.io/post/hacking-my-own-server/">
+<base href="https://ianmcxa.github.io" />
+<meta property="og:title" content="Locking myself out of my Linux Server (and breaking in again)" />
+<meta property="og:description" content="I have a little Linux VPS server that I use for various things. It runs some of the sites I&rsquo;ve made over the years, and runs a Deluge, which if your not familiar, is a torrent client. It&rsquo;s useful for seeding Linux ISOs and sharing files and whatnot.
+A few months back I was going to update the server to the next Ubuntu version, when I noticed that my user didn&rsquo;t have sudo rights." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ianmcxa.github.io/post/hacking-my-own-server/" />
+
+
+
+<meta property="article:published_time" content="2018-08-05T23:31:41-04:00"/>
+
+<meta property="article:modified_time" content="2018-08-05T23:31:41-04:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Locking myself out of my Linux Server (and breaking in again)"/>
+<meta name="twitter:description" content="I have a little Linux VPS server that I use for various things. It runs some of the sites I&rsquo;ve made over the years, and runs a Deluge, which if your not familiar, is a torrent client. It&rsquo;s useful for seeding Linux ISOs and sharing files and whatnot.
+A few months back I was going to update the server to the next Ubuntu version, when I noticed that my user didn&rsquo;t have sudo rights."/>
+
+
+
+<meta itemprop="name" content="Locking myself out of my Linux Server (and breaking in again)">
+<meta itemprop="description" content="I have a little Linux VPS server that I use for various things. It runs some of the sites I&rsquo;ve made over the years, and runs a Deluge, which if your not familiar, is a torrent client. It&rsquo;s useful for seeding Linux ISOs and sharing files and whatnot.
+A few months back I was going to update the server to the next Ubuntu version, when I noticed that my user didn&rsquo;t have sudo rights.">
+
+
+<meta itemprop="datePublished" content="2018-08-05T23:31:41-04:00" />
+<meta itemprop="dateModified" content="2018-08-05T23:31:41-04:00" />
+<meta itemprop="wordCount" content="484">
+
+
+
+<meta itemprop="keywords" content="" />
+
+
+<link rel="stylesheet" href="css/layout.css" />
+<style type="text/css">
+body {
+  background-color: #101010;
+  color: #dbdbdb;
+}
+
+a { color: #dbdbdb; }
+
+pre {
+  background: #1D1F21;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+}
+
+code {
+  background: #1D1F21;
+}
+
+blockquote {
+  background: #1D1F21;
+  border-left: 3px solid #dbdbdb;
+}
+
+table {
+  margin: 1em auto;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #dbdbdb;
+}
+
+th {
+  background: #dbdbdb;
+  color: #101010;
+}
+
+.siteTitle a { color: #99cc66; }
+
+.post .content h1{ color: #99cc66; }
+.post .content h2{ color: #99cc66; }
+.post .content h3{ color: #99cc66; }
+.post .content h4{ color: #99cc66; }
+.post .content h5{ color: #99cc66; }
+.post .content h6{ color: #99cc66; }
+.post .content a:hover { color: #99cc66; }
+.social-link:hover { color: #99cc66; }
+.nav-item-title:hover { color: #99cc66; }
+.tag a:hover { color: #99cc66; }
+.copyright { color: #404040 }
+.poweredby { color: #404040 }
+.poweredby a { color: #404040; }
+.post-preview .title a{ color: #99cc66; }
+.content-item a:hover{
+  text-decoration: underline;
+  color: #99cc66;
+}
+.post-list .title { color: #99cc66; }
+.rmore { color: #99cc66; }
+.terms .term a:hover {
+  text-decoration: underline;
+  color: #99cc66;
+}
+
+</style>
+
+
+
+<title>
+
+
+     Locking myself out of my Linux Server (and breaking in again) 
+
+</title>
+
+</head>
+
+
+<body>
+<div class="main">
+<header>
+
+<div class="header-bar">
+
+  <nav>
+    <div class="siteTitle">
+      <a href="https://ianmcxa.github.io">Ian Mcxa</a>
+    </div> 
+
+    
+    
+    <a class="nav-item" href="https://ianmcxa.github.io/post/"><div class="nav-item-title">Posts</div></a>
+    
+    <a class="nav-item" href="https://ianmcxa.github.io/about"><div class="nav-item-title">About</div></a>
+    
+
+  </nav>
+</div>
+
+  
+<div class="social-links-header">
+
+  
+  <a href="mailto:ianmcxa@tutanota.com"><div class="social-link">email</div></a>
+  
+
+  
+  <a href="https://github.com/ianmcxa" target="_blank"><div class="social-link">gh</div></a>
+  
+
+  
+  <a href="https://gitlab.com/ianmcxa" target="_blank"><div class="social-link">gl</div></a>
+  
+
+  
+
+  
+
+</div>
+
+
+</header>
+
+
+<article class="post">
+    <h1 class="title"> Locking myself out of my Linux Server (and breaking in again) </h1>
+    <div class="content"> <p>I have a little Linux VPS server that I use for various things. It runs some of the sites I&rsquo;ve made over the years, and runs a Deluge, which if your not familiar, is a torrent client. It&rsquo;s useful for seeding Linux ISOs and sharing files and whatnot.</p>
+
+<p>A few months back I was going to update the server to the next Ubuntu version, when I noticed that my user didn&rsquo;t have sudo rights. I tried to login as root, but I hadn&rsquo;t set a root password. I think I had been using the root account with my ssh key, but somewhere along the line I had disabled root login without giving my other user account sudo access.a</p>
+
+<p>So there I was, locked out of my server. I don&rsquo;t have physical access, and the hosting provider can&rsquo;t do anything short of re-imaging the machine. I did have backups of the sites on the server, but it would be a pain to set everything up again. So I started to size up my options.</p>
+
+<p>I did have a standard user account, with which I could log in and access my home directory. At this point, all I needed was a privilege escalation vulnerability and the sever would be mine again. I thought about attempting to exploit an old Linux CVE, but the system&rsquo;s kernel was relatively recent, so that didn&rsquo;t seem promising. At this point, I remembered a rather stupid mistake I had made when I was originally setting up the sever. I had forgotten to run the Deluge web UI under a normal user account. It was just running as root. The UI was running behind an SSH client cert, but I still had access. So if I could exploit Deluge in any way, I would have my server back.</p>
+
+<p>(As an aside from the story, if you are running any web control or admin dashboard, you should really be using SSH client certificates to protect it. Public/private keys are vastly superior to passwords, and Nginx makes it relatively easy to set them up)</p>
+
+<p>Next, I started to look through the Deluge web UI for anything useful. While digging through the settings, I came across plugins and as luck would have it, there was a Deluge plugin for running a custom script when a torrent was added or removed. From there it was a relatively simple matter of writing a bash script to set the root password, restarting Deluge which I ended up having to restart the entire box to do, and adding a torrent. From there I could su to the root user and the server was mine again.</p>
+
+<p>The moral of this story is&hellip;don&rsquo;t lose your root passwords, and make sure your sudo settings are correct. Also, if you&rsquo;re running a web UI without strong security it may be easier than you think to exploit it and gain control of your server.</p>
+ </div>
+    <footer class="post-footer">
+
+  <div class="post-footer-data">
+    
+<div class="tags">
+    
+</div>
+
+    <div class="date"> Aug 5, 2018 </div>
+  </div>
+
+</footer>
+
+
+  
+
+
+</article>
+
+  <footer>
+
+  <div class="social-links-footer">
+
+  
+  <a href="mailto:ianmcxa@tutanota.com"><div class="social-link">Email</div></a>
+  
+
+  
+  <a href="https://github.com/ianmcxa" target="_blank"><div class="social-link">GitHub</div></a>
+  
+
+  
+  <a href="https://gitlab.com/ianmcxa" target="_blank"><div class="social-link">GitLab</div></a>
+  
+
+  
+
+  
+
+  <div class="social-link">
+  <a href="https://ianmcxa.github.io/index.xml" target="_blank">RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="copyright"> Copyright (c) 2018, all rights reserved. </div>
+
+  <div class="poweredby">
+    Powered by <a href="https://gohugo.io/">Hugo</a>.
+  </div>
+
+  </footer>
+
+</div> 
+
+</body>
+</html>
+
