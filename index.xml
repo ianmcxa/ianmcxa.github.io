@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ian Mcxa</title>
+    <link>https://ianmcxa.github.io/</link>
+    <description>Recent content on Ian Mcxa</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright (c) 2018, all rights reserved.</copyright>
+    <lastBuildDate>Sun, 05 Aug 2018 23:27:34 -0400</lastBuildDate>
+    
+	<atom:link href="https://ianmcxa.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://ianmcxa.github.io/about/</link>
+      <pubDate>Sun, 05 Aug 2018 23:27:34 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/about/</guid>
+      <description>Hello, my name is Ian. I do a little bit of everything, but mostly that boils down to software, writing, stenotype and music.</description>
+    </item>
+    
+  </channel>
+</rss>
