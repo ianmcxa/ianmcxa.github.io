@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Ian Mcxa</title>
+    <link>https://ianmcxa.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Ian Mcxa</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright (c) 2018, all rights reserved.</copyright>
+    <lastBuildDate>Sun, 05 Aug 2018 23:31:41 -0400</lastBuildDate>
+    
+	<atom:link href="https://ianmcxa.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Locking myself out of my Linux Server (and breaking in again)</title>
+      <link>https://ianmcxa.github.io/post/hacking-my-own-server/</link>
+      <pubDate>Sun, 05 Aug 2018 23:31:41 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/post/hacking-my-own-server/</guid>
+      <description>I have a little Linux VPS server that I use for various things. It runs some of the sites I&amp;rsquo;ve made over the years, and runs a Deluge, which if your not familiar, is a torrent client. It&amp;rsquo;s useful for seeding Linux ISOs and sharing files and whatnot.
+A few months back I was going to update the server to the next Ubuntu version, when I noticed that my user didn&amp;rsquo;t have sudo rights.</description>
+    </item>
+    
+  </channel>
+</rss>

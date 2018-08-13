@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ianmcxa.github.io/post/controlling-my-lights-with-my-pebble/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ianmcxa.github.io/projects/</loc>
     <lastmod>2018-08-06T21:10:28-04:00</lastmod>
   </url>
@@ -23,24 +28,73 @@
   </url>
   
   <url>
+    <loc>https://ianmcxa.github.io/tags/android/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ianmcxa.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ianmcxa.github.io/</loc>
-    <lastmod>2018-08-06T21:10:28-04:00</lastmod>
+    <loc>https://ianmcxa.github.io/tags/golang/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ianmcxa.github.io/post/</loc>
+    <loc>https://ianmcxa.github.io/tags/home-automation/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/tags/linux/</loc>
     <lastmod>2018-08-05T23:31:41-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://ianmcxa.github.io/tags/pebble/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/post/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/tags/raspberry-pi/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/tags/security/</loc>
+    <lastmod>2018-08-05T23:31:41-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://ianmcxa.github.io/tags/smartwatch/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://ianmcxa.github.io/tags/</loc>
+    <lastmod>2018-08-10T21:44:14-04:00</lastmod>
     <priority>0</priority>
   </url>
   

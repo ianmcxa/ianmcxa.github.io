@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="Ian Mcxa" />
+<meta name="description" content="personal blog, tech, computer networking, computer security" />
+<meta name="keywords" content="blog, tech" />
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.46" />
+
+<link rel="canonical" href="https://ianmcxa.github.io/post/controlling-my-lights-with-my-pebble/">
+<base href="https://ianmcxa.github.io" />
+<meta property="og:title" content="Controlling Lights With My Pebble Smartwatch" />
+<meta property="og:description" content="A while ago, I wanted to automate the lights in my house. There were several guides for controlling cheap radio outlets with a Raspberry Pi and webapp. I ordered the parts and set it up over a weekend, but using a webapp to turn lights on and off was cumbersome if I wasn&rsquo;t already sitting at my computer.
+I had recently picked up a Pebble 2, so I took it a step further and wrote an Android App and Pebble App to control the lights from my phone and my watch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ianmcxa.github.io/post/controlling-my-lights-with-my-pebble/" />
+
+
+
+<meta property="article:published_time" content="2018-08-10T21:44:14-04:00"/>
+
+<meta property="article:modified_time" content="2018-08-10T21:44:14-04:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Controlling Lights With My Pebble Smartwatch"/>
+<meta name="twitter:description" content="A while ago, I wanted to automate the lights in my house. There were several guides for controlling cheap radio outlets with a Raspberry Pi and webapp. I ordered the parts and set it up over a weekend, but using a webapp to turn lights on and off was cumbersome if I wasn&rsquo;t already sitting at my computer.
+I had recently picked up a Pebble 2, so I took it a step further and wrote an Android App and Pebble App to control the lights from my phone and my watch."/>
+
+
+
+<meta itemprop="name" content="Controlling Lights With My Pebble Smartwatch">
+<meta itemprop="description" content="A while ago, I wanted to automate the lights in my house. There were several guides for controlling cheap radio outlets with a Raspberry Pi and webapp. I ordered the parts and set it up over a weekend, but using a webapp to turn lights on and off was cumbersome if I wasn&rsquo;t already sitting at my computer.
+I had recently picked up a Pebble 2, so I took it a step further and wrote an Android App and Pebble App to control the lights from my phone and my watch.">
+
+
+<meta itemprop="datePublished" content="2018-08-10T21:44:14-04:00" />
+<meta itemprop="dateModified" content="2018-08-10T21:44:14-04:00" />
+<meta itemprop="wordCount" content="2227">
+
+
+
+<meta itemprop="keywords" content="Raspberry Pi,Home automation,Smartwatch,Golang,Android,Pebble," />
+
+
+<link rel="stylesheet" href="css/layout.css" />
+<style type="text/css">
+body {
+  background-color: #0e1419;
+  color: #fffad6;
+}
+
+a { color: #fffad6; }
+
+pre {
+  background: #1D1F21;
+  border: 1px solid #fffad6;
+  border-radius: 5px;
+}
+
+code {
+  background: #1D1F21;
+}
+
+blockquote {
+  background: #1D1F21;
+  border-left: 3px solid #fffad6;
+}
+
+table {
+  margin: 1em auto;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #fffad6;
+}
+
+th {
+  background: #fffad6;
+  color: #0e1419;
+}
+
+.siteTitle a { color: #de93ff; }
+
+.post .content h1{ color: #de93ff; }
+.post .content h2{ color: #de93ff; }
+.post .content h3{ color: #de93ff; }
+.post .content h4{ color: #de93ff; }
+.post .content h5{ color: #de93ff; }
+.post .content h6{ color: #de93ff; }
+.post .content a:hover { color: #de93ff; }
+.social-link:hover { color: #de93ff; }
+.nav-item-title:hover { color: #de93ff; }
+.tag a:hover { color: #de93ff; }
+.copyright { color: #404040 }
+.poweredby { color: #404040 }
+.poweredby a { color: #404040; }
+.post-preview .title a{ color: #de93ff; }
+.content-item a:hover{
+  text-decoration: underline;
+  color: #de93ff;
+}
+.post-list .title { color: #de93ff; }
+.rmore { color: #de93ff; }
+.terms .term a:hover {
+  text-decoration: underline;
+  color: #de93ff;
+}
+
+</style>
+
+
+
+<title>
+
+
+     Controlling Lights With My Pebble Smartwatch 
+
+</title>
+
+</head>
+
+
+<body>
+<div class="main">
+<header>
+
+<div class="header-bar">
+
+  <nav>
+    <div class="siteTitle">
+      <a href="https://ianmcxa.github.io">Ian Mcxa</a>
+    </div> 
+
+    
+    
+    <a class="nav-item" href="https://ianmcxa.github.io/post/"><div class="nav-item-title">Posts</div></a>
+    
+    <a class="nav-item" href="https://ianmcxa.github.io/projects"><div class="nav-item-title">Projects</div></a>
+    
+    <a class="nav-item" href="https://ianmcxa.github.io/about"><div class="nav-item-title">About</div></a>
+    
+
+  </nav>
+</div>
+
+  
+<div class="social-links-header">
+
+  
+  <a href="mailto:ianmcxa@tutanota.com"><div class="social-link">email</div></a>
+  
+
+  
+  <a href="https://github.com/ianmcxa" target="_blank"><div class="social-link">gh</div></a>
+  
+
+  
+
+  
+  <a href="https://twitter.com/ian_mcxa" target="_blank"><div class="social-link">twtr</div></a>
+  
+
+  
+
+</div>
+
+
+</header>
+
+
+<article class="post">
+    <h1 class="title"> Controlling Lights With My Pebble Smartwatch </h1>
+    <div class="content"> 
+
+<p><video controls width="600" src="https://ianmcxa.github.io/video/lighting-control-demo.mp4"/></p>
+
+<p>A while ago, I wanted to automate the lights in my house. <a href="https://domoticproject.com/controlling-433-mhz-remote-raspberry-pi/" target="_blank">There</a> <a href="https://www.home-assistant.io/components/switch.rpi_rf/" target="_blank">were</a> <a href="https://timleland.com/wireless-power-outlets/" target="_blank">several</a> guides for controlling cheap radio outlets with a Raspberry Pi and webapp. I ordered the parts and set it up over a weekend, but using a webapp to turn lights on and off was cumbersome if I wasn&rsquo;t already sitting at my computer.</p>
+
+<p>I had recently picked up a Pebble 2, so I took it a step further and wrote an Android App and Pebble App to control the lights from my phone and my watch.</p>
+
+<p>This post will be one part show and tell, one part tutorial. Please do keep in mind that my code for this project was written primarily for me, so it isn&rsquo;t configurable without modifying the source. You&rsquo;ll need to be comfortable with compiling Go, modifying an Android App, setting up the Pebble SDK and modifying a Pebble App to get this working.</p>
+
+<h2 id="getting-the-parts">Getting The Parts</h2>
+
+<p>For this to work, we&rsquo;re going to need a few things.</p>
+
+<ol>
+<li><a href="https://www.amazon.com/gp/product/B01N5JSAHM/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=sk0fc-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B01N5JSAHM&amp;linkId=1baf063679bf406043a9ce259af19f25" target="_blank">Etekcity</a> (or similar) 433 Mhz outlets</li>
+<li>A 433 Mhz transmitter and receiver. Pretty much any <a href="https://www.amazon.com/gp/product/B01DKC2EY4/ref=as_li_qf_asin_il_tl?ie=UTF8&amp;tag=sk0fc-20&amp;creative=9325&amp;linkCode=as2&amp;creativeASIN=B01DKC2EY4&amp;linkId=e8e2264cb3f28be1ea14130a678f1c29" target="_blank">generic</a> one will work. I&rsquo;ve read a few people recommending getting a set of them in case one or two are defective.</li>
+<li>A raspberry pi. I&rsquo;m using the original Raspberry Pi B+, but anything with compatible GPIO and networking should work fine.</li>
+<li>Some patch cables. I used <a href="https://www.amazon.com/gp/product/B01LZF1ZSZ/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B01LZF1ZSZ&amp;linkCode=as2&amp;tag=sk0fc-20&amp;linkId=181018557147ea1f05503246a2e41983" target="_blank">these</a>.</li>
+<li>An Android Phone</li>
+<li>A pebble smartwatch, I&rsquo;ve got a Pebble 2 but everything should work on pretty much any Pebble.</li>
+</ol>
+
+<p>Some optional things that may will make the project easier.</p>
+
+<ol>
+<li>Soldering tools - while you <em>can</em> just take some wire and wrap it around the transmitter antenna connection, soldering it in place is a much more robust solution.</li>
+<li>A GPIO breakout breadboard - this will make connecting the wires much simpler but you don&rsquo;t absolutely need it.</li>
+</ol>
+
+<p>Software you&rsquo;ll need, all of it is open source!</p>
+
+<ol>
+<li><a href="https://projects.drogon.net/raspberry-pi/wiringpi/download-and-install/" target="_blank">WiringPi</a></li>
+<li><a href="https://github.com/timleland/rfoutlet" target="_blank">Tim Leland&rsquo;s RFoutlet code</a></li>
+<li><a href="https://github.com/ianmcxa/lights" target="_blank">RestAPI and Webapp</a> to control the lights. Note, you&rsquo;ll need to modify the source with your own light codes and names.</li>
+<li><a href="https://github.com/ianmcxa/LightingControl" target="_blank">LightingControl</a> Android App, You&rsquo;ll also want to modify the names of the lights as well as the IP address or domain for your Pi</li>
+<li><a href="https://ianmcxa.github.io/gadgetbridge.apk">Gadgetbridge</a> Fork, you can build this from <a href="https://github.com/ianmcxa/gadgetbridge" target="_blank">source</a> or download my precompiled version.</li>
+<li><a href="https://github.com/ianmcxa/lights/tree/master/pebble" target="_blank">Pebble App</a>, you&rsquo;ll also want to modify this with the names of your lights and the order you want them to appear.</li>
+</ol>
+
+<h2 id="setting-up-the-433-mhz-outlets">Setting Up The 433 Mhz Outlets</h2>
+
+
+<figure>
+    
+        <img src="https://ianmcxa.github.io/images/lighting_control_outlet.jpg" alt="An RF outlet" width="400" />
+    
+    
+    <figcaption>
+        <h4>An RF outlet</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>Your outlets should come with a remote or set of remotes. They may also have the ability to program which buttons control which lights. I recommend verifying that the outlets and remotes work before continuing.</p>
+
+<h2 id="setting-up-the-raspberry-pi-and-capturing-the-remote-codes">Setting Up the Raspberry Pi and Capturing the Remote Codes</h2>
+
+
+<figure>
+    
+        <img src="https://ianmcxa.github.io/images/lighting_control_pi.jpg" alt="My raspberry Pi with 433 Mhz transmitter attached" width="400" />
+    
+    
+    <figcaption>
+        <h4>My raspberry Pi setup</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>For this part, I&rsquo;m pretty much following Tim Leland&rsquo;s guide. I highly recommend checking out the original guide <a href="https://github.com/timleland/rfoutlet" target="_blank">here</a>. Everything should be the same except the php portion.</p>
+
+<p>You&rsquo;re going to want to get the Raspberry Pi up and running with some flavor of Linux. Next you&rsquo;ll need to install WiringPi by following <a href="https://projects.drogon.net/raspberry-pi/wiringpi/download-and-install/" target="_blank">this</a> guide.</p>
+
+<p>Clone the code <code>git clone https://github.com/timleland/rfoutlet.git</code> onto your Raspberry Pi</p>
+
+
+<figure>
+    
+        <img src="https://ianmcxa.github.io/images/lighting_control_gpio.png" alt="433 Mhz Transmitter and Receiver GPIO configuration" width="400" />
+    
+    
+    <figcaption>
+        <h4>Transmitter and Receiver GPIO Configuration</h4>
+        
+    </figcaption>
+    
+</figure>
+
+
+<p>Connect the 433 Mhz receiver to the Pi so we can capture the codes sent by the remote. Holding the receiver with the components facing you, connect the left most pin to any of the 5v pins on the Pi. Then connect the second from the left pin to GPIO pin 21 or 27. The GPIO layout will be different depending on which model of Pi you use. Finally, connect the right most pin to a ground pin on the Pi. You should now be ready to record your 433 Mhz codes.</p>
+
+<p>From the directory you installed the utilities, run RFSniffer.</p>
+
+<p><code>sudo ./RFSniffer</code></p>
+
+<p>Now, with your remote. Press each of the buttons and record the codes and pulse lengths that are printed by RFSniffer. Keep track of which codes map to which buttons.</p>
+
+<p>Once you&rsquo;ve got all the codes recorded, you can disconnect the receiver since you won&rsquo;t be needing it anymore.</p>
+
+<p>Next, connect the transmitter. For this we&rsquo;ll need an antenna. I&rsquo;m using about a 4 inch piece of jumper wire that I cut and just attached to the antenna spot on the transmitter by bending the wire around it. I did this because I didn&rsquo;t have soldering tools at the time. If you have soldering tools, you should definitely solder the antenna down. Next, with the components facing you, plug the left most pin into GPIO 17, plug the center pin into a 5v GPIO pin, and plug the right most pin into ground.</p>
+
+<p>Plug in one of your outlets and attempt to send the ON code for it.</p>
+
+<p><code>./codesend YOUR_CODE</code></p>
+
+<p>If all goes well, your light should turn on!</p>
+
+<p>If all doesn&rsquo;t go well, double check that your pins and antenna wire are connected correctly. If that doesn&rsquo;t work you may have to specify a different pulse length on the codesend command with -l.</p>
+
+<h2 id="creating-the-rest-api">Creating the REST API</h2>
+
+<p>At this point, I created a pretty simple REST API in Go that just calls the codesend binary using os/exec. It&rsquo;s not ideal, and I should probably be using WiringPi directly, but it works! I like using Golang for projects like this because it&rsquo;s so easy to cross compile. You just have to set the <code>$GOARCH</code> environment variable and run <code>go build</code>. This means I can compile the code on my desktop instead of on a slow Pi processor.</p>
+
+<p>I also created a simple web frontend that just makes REST calls to the API. It uses the <a href="https://getmdl.io/" target="_blank">Material Design Lite</a> UI kit. It gives the webapp a nice consistent look compared to the Android app.</p>
+
+<p>You can clone or download the project from <a href="https://github.com/ianmcxa/lights" target="_blank">https://github.com/ianmcxa/lights</a>. This includes the server code, the pebble app and a tiny CLI.</p>
+
+<p>Next in main.go you&rsquo;ll want to modify the codes array with your codes. You will also want to modify the sendCode function to point to the location where you installed the codesend binary. I have mine in /home/pi/rfoutlet.</p>
+
+<p>The API itself is pretty simple. The / route returns the contents of app.html which we&rsquo;ll get to in a minute, and the /update route takes a POST request with a JSON message. The JSON message is an object with the fields light and state. State is 0 for off and 1 for on. Light is the index into the array of light codes.</p>
+
+<p>To compile the app set your GOARCH environment variable to arm or arm64 depending on which version of the Pi you&rsquo;re using. Then, run <code>go build</code>.</p>
+
+<p>Next, you&rsquo;ll probably want to change the names of the lights in the app.html file. Note that the Golang code serves the app.html from the directory in which it is running, so you can modify the html without having to recompile the API.</p>
+
+<p>Once you&rsquo;ve got it the way you want it, copy the lights file and app.html file to your Pi. Then run the lights file. Navigate to <a href="http://YOUR_PI_IP_ADDRESS:8080/" target="_blank">http://YOUR_PI_IP_ADDRESS:8080/</a> You should see the webui. Try turning on and off the outlets. Note that you may need to run the file as root depending on the permissions.</p>
+
+<h2 id="building-the-android-app">Building the Android App</h2>
+
+
+<figure>
+    
+        <img src="https://ianmcxa.github.io/images/lighting_control_android_app.png" alt="Lighting Control App Screenshot" height="500rem" />
+    
+    
+</figure>
+
+
+<p>The Android app itself is pretty simple. Just a few buttons that send POST requests to the Pi&rsquo;s REST API. There is also a PebbleKit receiver which listens for requests from the watch and forwards them to the Pi.</p>
+
+<p>Download the App source code from here <a href="https://github.com/ianmcxa/LightingControl" target="_blank">https://github.com/ianmcxa/LightingControl</a>. Open the App in Android studio. You&rsquo;ll want to change the hardcoded IP address both in MainActivity.java and in PebbleReceiver.java. Next, you&rsquo;ll want to change the names of the lights in res/layout/activity_main.xml just like you did for the app.html. Once you&rsquo;ve got it the way you want, connect your Android device, enable developer options, and turn on ADB. Now build and install the App. You should be able to turn the lights on and off from the app. Don&rsquo;t forget to make sure you&rsquo;re on the same network as the Pi!</p>
+
+<h2 id="creating-the-pebble-app">Creating The Pebble App</h2>
+
+
+<figure>
+    
+        <img src="https://ianmcxa.github.io/images/lighting_control_pebble_app.jpg" alt="Pebble App Screenshot" height="300rem" />
+    
+    
+</figure>
+
+
+<p>Creating the Pebble App was a bit of an interesting UX challenge. I had 3 buttons to work with (well 4 if you count the back button), and I needed to control 6 different lights in as few button presses as possible. Since I can&rsquo;t know the state each light is in, I had to create a separate on and off actions. What I eventually settled on was using the top and bottom buttons for on and off respectively, and using the center button to cycle through the lights.</p>
+
+<p>For the UI, I just show the currently selected light. I should eventually add an on and off button, but that can come later.</p>
+
+<p>Pebble does support a Javascript API which lets you run code on the phone as part of your watch app; however, I&rsquo;m using <a href="https://gadgetbridge.org/" target="_blank">Gadgetbridge</a>, an open source Pebble App alternative, which doesn&rsquo;t support connecting to the internet from the Javascript environment. It does support the PebbleKit SDK which lets watch apps communicate with other Android apps on the phone. Since I had already created an Android app for my lights, I figured this would be the way to go.</p>
+
+<p>The Pebble app sends a PebbleKit message tagged with a UUID, which Gadgetbridge forwards to the app which has registered for that UUID. This would all work well and the world would be a beautiful place except for the fact that Google has started preventing apps from broadcasting to each other.</p>
+
+<h3 id="hacking-gadgetbridge-to-get-around-android-s-ban-on-implicit-intents">Hacking GadgetBridge to Get Around Android&rsquo;s Ban on Implicit Intents</h3>
+
+<p>It&rsquo;s true, with Android 8 or Android Oreo Google has decided to <a href="https://commonsware.com/blog/2017/04/11/android-o-implicit-broadcast-ban.html" target="_blank">prevent apps from broadcasting to each other</a>. Apps can still communicate, but they must specify exactly which apps they are sending messages to. You cannot simply broadcast to any listening apps. There&rsquo;s a lot of reasoning behind it. Apparently, memory constrained devices can start to thrash due to broadcasts. So, we&rsquo;ll have to work around this.</p>
+
+<p>My solution, which is definitely not ideal, is to fork Gadgetbridge and send the PebbleKit Intents directly to my lighting control app. The fix was actually pretty simple. In the PebbleKitSupport.java file, I changed the implicit broadcast intent to an explicit one by setting the Intent to go directly to my app lighting app org.mcxa.lightingcontrol.</p>
+
+<p>I think a better solution long term may be to add a menu to Gadgetbridge that allows a user to specify which apps PebbleKit Intents should be sent to, but for now my solution works.</p>
+
+<h3 id="setting-it-all-up">Setting It All Up</h3>
+
+<p>You can download the precompiled version <a href="https://ianmcxa.github.io/gadgetbridge.apk">here</a> or you can build from source <a href="https://github.com/ianmcxa/gadgetbridge" target="_blank">https://github.com/ianmcxa/gadgetbridge</a>.</p>
+
+<p>The pebble watch app is in the pebble folder of the lights repo. To modify it for your own system, you&rsquo;ll need the pebble SDK. The official pebble servers have been shut down, but the rebbel.io folks have a mirror at <a href="https://developer.rebble.io/developer.pebble.com/sdk/download/index.html" target="_blank">https://developer.rebble.io/developer.pebble.com/sdk/download/index.html</a>.</p>
+
+<p>If you&rsquo;re using a different Pebble model than the Pebble 2, you&rsquo;ll want to modify the package.json file targetPlatforms array with the code name of your watch. Next, modify src/c/lights.c. Change the <code>light_codes</code> array to match your configuration. The array is formatted as <code>{light name, light index}</code> with the order of the array determining the order in which the center button iterates through the lights. I like to keep the lights I use the most close to the top of the array so that it takes less button presses to get to them.</p>
+
+<p>At this point, you should be able to run <code>pebble build</code> and get a pbw file. The pbw file is a pebble watch app bundle. You can copy it over to your Android device and install it with Gadgetbridge. Launch the app and see if you can turn your lights on and off.</p>
+
+<h2 id="bonus-lctl">Bonus lctl</h2>
+
+<p>I also wrote a simple little low level CLI for communicating with the Pi. It&rsquo;s very simple and just makes API calls. I wrote it in <a href="https://nim-lang.org/" target="_blank">Nim</a> programming language which is trying to be a sort of Python like language that compiles to C. Neat concept.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>It&rsquo;s pretty rad to be able to push buttons on my watch and have my lights turn on and off. It&rsquo;s a lot more intuitive than using my phone, especially since I&rsquo;ve got a shortcut setup to launch the pebble app. I can turn light on and off without even looking at my watch since I&rsquo;ve memorized the button patterns.</p>
+
+<p>I do feel like I&rsquo;m abusing the RF spectrum a bit since to turn a light on or off, a Bluetooth packet goes from the watch to the phone. The phone then sets up a TCP connection to the Pi and forwards the request to the REST api over Wifi. Finally, the Pi sends the code to the light. I wish I could get the pebble to send packets directly to the Pi, but unfortunately there doesn&rsquo;t seem to be a way to connect the two. Still though, I only have about 1 to 2 seconds of latency between pushing the button and having the light cut on.</p>
+
+<p>This has been one of my more ambitious projects. I started with just the webapp, and then added the Android app and Pebble app a little later. I&rsquo;ve touched a whole bunch of different languages and frameworks, Golang, Javascript, Java/Android, Nim and C. It&rsquo;s been fun.</p>
+ </div>
+    <footer class="post-footer">
+
+  <div class="post-footer-data">
+    
+<div class="tags">
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/raspberry-pi">#Raspberry Pi</a>
+      </div>
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/home-automation">#Home automation</a>
+      </div>
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/smartwatch">#Smartwatch</a>
+      </div>
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/golang">#Golang</a>
+      </div>
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/android">#Android</a>
+      </div>
+    
+      <div class="tag">
+        <a href="https://ianmcxa.github.io/tags/pebble">#Pebble</a>
+      </div>
+    
+</div>
+
+    <div class="date"> Aug 10, 2018 </div>
+  </div>
+
+</footer>
+
+
+  
+
+
+</article>
+
+  <footer>
+
+  <div class="social-links-footer">
+
+  
+  <a href="mailto:ianmcxa@tutanota.com"><div class="social-link">Email</div></a>
+  
+
+  
+  <a href="https://github.com/ianmcxa" target="_blank"><div class="social-link">GitHub</div></a>
+  
+
+  
+
+  
+  <a href="https://twitter.com/ian_mcxa" target="_blank"><div class="social-link">Twitter</div></a>
+  
+
+  
+
+  <div class="social-link">
+  <a href="https://ianmcxa.github.io/index.xml" target="_blank">RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="copyright"> Copyright (c) 2018, all rights reserved. </div>
+
+  <div class="poweredby">
+    Powered by <a href="https://gohugo.io/">Hugo</a>.
+  </div>
+
+  </footer>
+
+</div> 
+
+</body>
+</html>
+

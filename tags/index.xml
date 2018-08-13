@@ -7,9 +7,82 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
     <copyright>Copyright (c) 2018, all rights reserved.</copyright>
+    <lastBuildDate>Fri, 10 Aug 2018 21:44:14 -0400</lastBuildDate>
     
 	<atom:link href="https://ianmcxa.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Android</title>
+      <link>https://ianmcxa.github.io/tags/android/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://ianmcxa.github.io/tags/golang/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Home Automation</title>
+      <link>https://ianmcxa.github.io/tags/home-automation/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/home-automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://ianmcxa.github.io/tags/linux/</link>
+      <pubDate>Sun, 05 Aug 2018 23:31:41 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pebble</title>
+      <link>https://ianmcxa.github.io/tags/pebble/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/pebble/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Raspberry Pi</title>
+      <link>https://ianmcxa.github.io/tags/raspberry-pi/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/raspberry-pi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://ianmcxa.github.io/tags/security/</link>
+      <pubDate>Sun, 05 Aug 2018 23:31:41 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Smartwatch</title>
+      <link>https://ianmcxa.github.io/tags/smartwatch/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/tags/smartwatch/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Smartwatch on Ian Mcxa</title>
+    <link>https://ianmcxa.github.io/tags/smartwatch/</link>
+    <description>Recent content in Smartwatch on Ian Mcxa</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright (c) 2018, all rights reserved.</copyright>
+    <lastBuildDate>Fri, 10 Aug 2018 21:44:14 -0400</lastBuildDate>
+    
+	<atom:link href="https://ianmcxa.github.io/tags/smartwatch/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Controlling Lights With My Pebble Smartwatch</title>
+      <link>https://ianmcxa.github.io/post/controlling-my-lights-with-my-pebble/</link>
+      <pubDate>Fri, 10 Aug 2018 21:44:14 -0400</pubDate>
+      
+      <guid>https://ianmcxa.github.io/post/controlling-my-lights-with-my-pebble/</guid>
+      <description>A while ago, I wanted to automate the lights in my house. There were several guides for controlling cheap radio outlets with a Raspberry Pi and webapp. I ordered the parts and set it up over a weekend, but using a webapp to turn lights on and off was cumbersome if I wasn&amp;rsquo;t already sitting at my computer.
+I had recently picked up a Pebble 2, so I took it a step further and wrote an Android App and Pebble App to control the lights from my phone and my watch.</description>
+    </item>
+    
+  </channel>
+</rss>
