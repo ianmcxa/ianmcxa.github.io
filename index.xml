@@ -29,8 +29,8 @@ I had recently picked up a Pebble 2, so I took it a step further and wrote an An
       
       <guid>https://ianmcxa.github.io/projects/</guid>
       <description>These are some of the projects I&amp;rsquo;ve done over the years.
-LearnSteno LearnSteno is a project to create a modern platform for learning stenotype with plover. The project consists of practice drills and lessons. Learnsteno is written in VueJS.
-Vortaro Vortaro is an English-Esperanto dictionary app for Android. It is heavily inspired by the webpage Tuja Voratro. It&amp;rsquo;s really cool because it lets you search for both English or Esperanto words in a single text box.</description>
+Soft Sound Soft sound is an Android sound machine. It lets you mix different sound loops together to create background noise. I originally wrote the code in a single day, but went back to add more sounds and make the UI look better.
+LearnSteno LearnSteno is a project to create a modern platform for learning stenotype with plover. The project consists of practice drills and lessons.</description>
     </item>
     
     <item>
